@@ -2,6 +2,10 @@ package backend;
 
 import flixel.FlxState;
 import backend.PsychCamera;
+#if mobile
+import mobile.controls.MobileVirtualPad;
+import flixel.util.FlxDestroyUtil;
+#end
 
 class MusicBeatState extends FlxState
 {
@@ -19,6 +23,47 @@ class MusicBeatState extends FlxState
 		return Controls.instance;
 	}
 
+	public static var instance:MusicBeatState;
+	public var virtualPad:MobileVirtualPad;
+
+	public var vpadCam:FlxCamera;
+
+    public function addVirtualPad(DPad:MobileDPadMode, Action:MobileActionMode)
+	{
+		if (virtualPad != null)
+			removeVirtualPad();
+
+		virtualPad = new MobileVirtualPad(DPad, Action);
+		add(virtualPad);
+	}
+
+	public function removeVirtualPad()
+	{
+		if (virtualPad != null)
+			remove(virtualPad);
+	}
+	
+	public function addVirtualPadCamera(DefaultDrawTarget:Bool = false)
+	{
+		if (virtualPad != null)
+		{
+			vpadCam = new FlxCamera();
+			FlxG.cameras.add(vpadCam, DefaultDrawTarget);
+			vpadCam.bgColor.alpha = 0;
+			virtualPad.cameras = [vpadCam];
+		}
+	}
+
+	override function destroy()
+	{
+		super.destroy();
+
+		if (virtualPad != null)
+		{
+			virtualPad = FlxDestroyUtil.destroy(virtualPad);
+		}
+	}
+
 	var _psychCameraInitialized:Bool = false;
 
 	public var variables:Map<String, Dynamic> = new Map<String, Dynamic>();
@@ -26,6 +71,7 @@ class MusicBeatState extends FlxState
 		return getState().variables;
 
 	override function create() {
+		instance = this;
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		#if MODS_ALLOWED Mods.updatedOnState = false; #end
 
