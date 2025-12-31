@@ -27,12 +27,9 @@ jobs:
 
       - name: Install Haxelib
         run: |
-          sudo apt-get install libvlc-dev
-          sudo apt-get install libvlccore-dev
-          haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null --quiet
-          chmod +x ./setup/android.sh
-          sh ./setup/android.sh
+          haxelib install hmm --quiet
+          haxelib run hmm setup --quiet
+          haxelib run hmm install --quiet
           haxelib run lime rebuild hxcpp
           
       - name: Skip SScript setup mode
