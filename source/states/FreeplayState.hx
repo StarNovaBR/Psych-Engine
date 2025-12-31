@@ -185,6 +185,9 @@ class FreeplayState extends MusicBeatState
 		
 		player = new MusicPlayer(this);
 		add(player);
+
+		addVirtualPad(LEFT_FULL, A_B);
+		addVirtualPadCamera();
 		
 		changeSelection();
 		updateTexts();
