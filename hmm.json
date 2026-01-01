@@ -14,8 +14,10 @@
     },
     {
       "name": "flixel",
-      "type": "haxelib",
-      "version": "5.6.1"
+      "type": "git",
+      "dir": null,
+      "ref": "main",
+      "url": "https://github.com/ArkoseLabsOfficial/flixel-5.8.0-fixed"
     },
     {
       "name": "flixel-addons",
