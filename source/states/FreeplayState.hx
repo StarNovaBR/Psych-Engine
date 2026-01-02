@@ -188,7 +188,6 @@ class FreeplayState extends MusicBeatState
 		
 		changeSelection();
 		addVirtualPad(LEFT_FULL, A_B);
-		addVirtualPadCamera();
 		updateTexts();
 		super.create();
 	}
